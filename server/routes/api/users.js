@@ -5,16 +5,15 @@ const app = express();
 
 const router = express.Router();
 // In mongoose, a schema represents the structure of a particular document, either completely or just a portion of the document.
-const schemaActes = mongoose.Schema({
+const schemaUsers = mongoose.Schema({
 
-    nom :           String,
-    description :   String,
-    duree :         Number,
-    prix :          Number
+    nomUtilisateur :     String,
+    MDP :   String,
+
 })
 
 // A model defines a programming interface for interacting with the database
-const Acte = mongoose.model('Acte', schemaActes);
+const Users = mongoose.model('Users', schemausers);
 
 /*##
 So a schema answers "what will the data in this collection look like?" and a model provides functionality 
@@ -30,42 +29,31 @@ Express propose un système de routage qui permet de définir facilement des cor
 // getdata
 router.get('/', async (req, res) => {
 
-    const data = await Acte.find();
+    const data = await User.find();
     res.send(data)
 })
-// insert data
-router.post('/', async (req, res) => {
-    // Créer une instance du Modèle
-    const acte = new Acte({
-        nom :   req.body.nom,
-        description :req.body.description,
-        duree :   req.body.duree,
-        prix :   req.body.prix
-    })
-    data = await acte.save();
-    res.send(data)
-})
+
 // update data
 router.put('/:id', async (req, res) => {
     const id = req.params.id;
 
-    const acte = await Acte.findById(id);
-    acte.nom    = req.body.nom;
-    acte.description  = req.body.description;
-    acte.duree     = req.body.duree ;
-    acte.prix     = req.body.prix;
+    const user = await User.findById(id);
+    user.nom    = req.body.nom;
+    user.description  = req.body.description;
+    user.duree     = req.body.duree ;
+    user.prix     = req.body.prix;
 
-    const data = await acte.save();
+    const data = await user.save();
     res.send(data);
 })
 // delete data
-router.delete('/:id', async (req, res) => {
-    const id = req.params.id;
+// router.delete('/:id', async (req, res) => {
+//     const id = req.params.id;
 
-    const acte = await Acte.findById(id);
+//     const user = await user.findById(id);
     
-    const data = await acte.delete();
-    res.send(data); //equal return
-})
+//     const data = await user.delete();
+//     res.send(data); //equal return
+// })
 
 module.exports = router;

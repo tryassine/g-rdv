@@ -1,20 +1,22 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors'); 
-const Joi = require('joi');
+const Joi = require('joi'); //
 const bodyParser = require('body-parser');
 const app = express();
 
 const router = express.Router();
+
 const schemaRendey_vs = mongoose.Schema({
 
-    date_rdv :  {type: String},
-    status :    String,
+    date_rdv :  {type: String} ,
+    status :    String ,
     patient :
-       {type: mongoose.Schema.Types.ObjectId,
-       ref: "Patient"},
-    acte:   {
-        type: mongoose.Schema.Types.ObjectId,
+                {   type: mongoose.Schema.Types.ObjectId,
+                    ref: "Patient"
+                } ,
+    acte    :   {
+        type: mongoose.Schema.Types.ObjectId ,
         ref: "Acte"
     }
 })
@@ -27,12 +29,14 @@ router.get('/', async (req, res) => {
     const data = await Rendey_v.find().populate('patient').populate('acte');
     res.send(data)
 })
-// insert data
 const RdvSchema = Joi.object({
     date_rdv :   Joi.date().greater('1-1-1974').required(),
     patient :    Joi.string().alphanum().required(),
     acte :   Joi.string().alphanum().required()
 });
+
+// insert data
+
 router.post('/', async (req, res) => {
     const dataToValidate = req.body;
     const rdvErrors = RdvSchema.validate(dataToValidate);
@@ -49,7 +53,7 @@ router.post('/', async (req, res) => {
     res.send({message: "Enregistrer"})
 })
 
-// update data
+// update data : Put
 router.put('/:id', async (req, res) => {
     const id = req.params.id;
 
@@ -61,7 +65,7 @@ router.put('/:id', async (req, res) => {
     res.send(data);
 })
 
-// Modifier le Status seulement
+// Modifier le Status seulement : Put avec un lien spéciale /status/:id
 router.put('/status/:id', async (req, res) => {
     const id = req.params.id;
 
@@ -69,27 +73,27 @@ router.put('/status/:id', async (req, res) => {
     
     var status = "En cours";
     if(rendey_v) {
+ 
+        if(rendey_v.status == "Passé")   {
+            status  = "En cours";
+            }
+        if(rendey_v.status == "En cours")   {
+            status  = "En attente";
+            }
+        if(rendey_v.status == "En attente")   {
+            status  = "Passé";
+            }
+        rendey_v.status = status;
+        // 'await': pour attendre la fin de l'enregistrement .save()
+        const data = await rendey_v.save();
+        res.send(data);
 
-        
-     if(rendey_v.status == "Passé")   {
-        status  = "En cours";
-        }
-    if(rendey_v.status == "En cours")   {
-        status  = "En attente";
-        }
-    if(rendey_v.status == "En attente")   {
-        status  = "Passé";
-        }
-    rendey_v.status = status;
-    // 'await': pour attendre la fin de l'enregistrement .save()
-    const data = await rendey_v.save();
-    res.send(data);
     }
     else {
-        res.send({message:'votre rendez pas exists'})
+        res.send({message:'votre rendez n\'existe pas '})
     }
 })
-// delete data
+// delete data : Delete
 router.delete('/:id', async (req, res) => {
     const id = req.params.id;
 
