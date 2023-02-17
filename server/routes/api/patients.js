@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const app = express();
 
 const router = express.Router();
+
 const schemaPatients = mongoose.Schema({
 
     nom :       String,
@@ -23,7 +24,7 @@ router.get('/', async (req, res) => {
     const data = await Patient.find();
     res.send(data)
 })
-// insert data
+// insert data : Post
 router.post('/', async (req, res) => {
     const patient = new Patient({
         nom :   req.body.nom,
@@ -35,7 +36,7 @@ router.post('/', async (req, res) => {
     data = await patient.save();
     res.send(data)
 })
-// update data
+// update data : Put
 router.put('/:id', async (req, res) => {
     const id = req.params.id;
 
@@ -50,7 +51,7 @@ router.put('/:id', async (req, res) => {
     res.send(data);
 })
 
-// delete data
+// delete data : Delete
 router.delete('/:id', async (req, res) => {
     const id = req.params.id;
 

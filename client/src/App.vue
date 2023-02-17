@@ -62,6 +62,7 @@
 
 <script>
 
+import axios from 'axios';
 export default {
   name: 'App',
   components: {},
@@ -69,12 +70,32 @@ export default {
     auth() {
       var psw =  document.getElementById('psw').value;
       var lgn =  document.getElementById('login').value;
-      if(psw == "admin" && lgn == "admin" && lgn != " " && psw != " ") {
-        document.getElementById('authModal').style.display = "none";
-      }
-      else {
-        alert('User login or password are invalid!!')
-      }
+
+      // var loginDB = "admin";
+      // var passwordDB ="admin";
+
+      axios
+      .post('http://localhost:4000/api/users',{
+        psw : psw,
+        lgn : lgn
+      })
+      .then(res => {
+        console.log(res.data);
+        if (res.data == "SUCCESS") {
+          document.getElementById('authModal').style.display = "none";
+        }
+        else{
+          alert(res.data)
+        }
+      })
+        
+
+      // if(psw == loginDB && lgn == passwordDB && lgn != " " && psw != " ") {
+      //   document.getElementById('authModal').style.display = "none";
+      // }
+      // else {
+      //   alert('User login or password are invalid!!')
+      // }
     },
     logout() {
       document.getElementById('psw').value = "";

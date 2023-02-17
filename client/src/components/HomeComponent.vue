@@ -6,8 +6,8 @@
               <div class="card text-light bg-primary">
                 <div class="card-body">
                   <div class="text-center">
-                    <h5>Users</h5>
-                    <h1>14</h1>
+                    <h5>Actes</h5>
+                    <h1> {{ actesList.length}}  </h1>
                     </div>
                 </div>
               </div>
@@ -16,8 +16,8 @@
               <div class="card text-light bg-success">
                 <div class="card-body">
                   <div class="text-center">
-                    <h5>Users</h5>
-                    <h1>14</h1>
+                    <h5>Rendez-Vous</h5>
+                    <h1> {{ dataList.length}} </h1>
                     </div>
                 </div>
               </div>
@@ -26,8 +26,8 @@
               <div class="card text-light bg-secondary">
                 <div class="card-body">
                   <div class="text-center">
-                    <h5>Users</h5>
-                    <h1>14</h1>
+                    <h5>Patients</h5>
+                    <h1>{{ patientList.length}}</h1>
                     </div>
                 </div>
               </div>
@@ -44,7 +44,9 @@ export default {
   name: 'HomeComponent',
   data () {
     return {
-      dataList:{}
+      dataList:{}, 
+      patientList: {},
+      actesList: {}
     }
   },
   created() {
@@ -56,6 +58,20 @@ export default {
       .get('http://localhost:4000/api/rendez_vs')
       .then(res => {
         this.dataList = res.data;
+        console.log(res);
+      });
+
+            axios
+      .get('http://localhost:4000/api/actes')
+      .then(res => {
+        this.actesList = res.data;
+        console.log(res);
+      });
+
+            axios
+      .get('http://localhost:4000/api/patients')
+      .then(res => {
+        this.patientList = res.data;
         console.log(res);
       })
     }

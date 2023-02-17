@@ -33,3 +33,6 @@ app.use('/api/actes', actes);
 
 const rendez_vs = require('./routes/api/rendez_vs');
 app.use('/api/rendez_vs', rendez_vs);
+
+const users = require('./routes/api/users');
+app.use('/api/users', users);

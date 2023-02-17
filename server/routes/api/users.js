@@ -13,7 +13,7 @@ const schemaUsers = mongoose.Schema({
 })
 
 // A model defines a programming interface for interacting with the database
-const Users = mongoose.model('Users', schemausers);
+const User = mongoose.model('User', schemaUsers);
 
 /*##
 So a schema answers "what will the data in this collection look like?" and a model provides functionality 
@@ -27,10 +27,16 @@ Express propose un système de routage qui permet de définir facilement des cor
  par les utilisateurs et les fonctions ou les pages qui doivent être renvoyées en réponse à ces demandes
 ##*/
 // getdata
-router.get('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
 
-    const data = await User.find();
-    res.send(data)
+           const data =  await User.find({nomUtilisateur:req.body.lgn, MDP: req.body.psw});
+            if( data.length ){
+                res.send("SUCCESS")
+            }
+            else{
+                res.send("Le nom d'utilisateur ou le bien est invalide !")
+            }
+    
 })
 
 // update data
