@@ -44,7 +44,9 @@
                   <td><a class="btn btn-success btn-sm" v-if="data.status == 'Passé'" @click="Modifier_Status(data._id)"> {{data.status}} &#10003;</a>
                   <a class="btn btn-secondary btn-sm" v-if="data.status == 'En attente'" @click="Modifier_Status(data._id)"> {{data.status}} &#9675;</a>
                   <a class="btn btn-primary btn-sm" v-if="data.status == 'En cours'" @click="Modifier_Status(data._id)"> {{data.status}} ..</a></td>
-                  <td><a href="" class="btn btn-dark btn-sm" @click="modifierRdv(data._id)">Modifier</a>   <a href="" class="btn btn-light btn-sm" @click="DeleteRdv(data._id)">Supprimer</a></td>
+              <!--    <td><a href="" class="btn btn-dark btn-sm" @click="modifierRdv(data._id)">Modifier</a>   <a href="" class="btn btn-light btn-sm" @click="DeleteRdv(data._id)">Supprimer</a></td>  -->
+                  <td><a class="btn btn-dark btn-sm" @click="modifierRdv(data._id)">Modifier</a>   <a class="btn btn-light btn-sm" @click="DeleteRdv(data._id)">Supprimer</a></td>
+ 
               </tr>
             </tbody>
           </table>
@@ -109,6 +111,8 @@ export default {
           this.dataList = resultat.data;
           console.log(resultat);
           this.getdata();
+      } ).catch( (err) => {
+          console.log("TOTO "+err);
       } )
     }
   }

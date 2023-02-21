@@ -8,17 +8,17 @@
             <div class="modal-body">
               <div class="container ">
                 <div class="col-sm-6 m-auto my-5 bg-primary p-5">
-                  <h3 class="text-center text-light">Welcome ADMIN</h3>
+                  <h3 class="text-center text-light">Application de Gestion des Rendez-Vous</h3> <br/>
                   <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="text-light">Login</label>
+                    <label for="exampleFormControlInput1" class="text-light">Nom d'utilisateur</label>
                     <input type="text" class="form-control form-control-lg" id="login" placeholder="user login" required>
                   </div>
                   <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="text-light">Password</label>
+                    <label for="exampleFormControlInput1" class="text-light">Mot de passe</label>
                     <input type="password" class="form-control form-control-lg" id="psw" placeholder="***********" required>
                   </div>
                   <div class="mb-3">
-                    <div class="btn btn-dark btn-lg w-100" @click="auth()">Authentification</div>
+                    <div class="btn btn-dark btn-lg w-100" @click="auth()">Se connecter</div>
                   </div>
                 </div>             
               </div>
@@ -34,7 +34,7 @@
         <div class="offcanvas-body">
               <ul>
                 <li class="nav-item">
-                  <router-link to="/" class="nav-link">Home</router-link>
+                  <router-link to="/" class="nav-link">Accueil</router-link>
                 </li>
                 <li class="nav-item">
                   <router-link to="/rendezvous" class="nav-link">Rendez Vous</router-link>
@@ -81,12 +81,15 @@ export default {
       })
       .then(res => {
         console.log(res.data);
+
         if (res.data == "SUCCESS") {
+          document.getElementById('authModal').classList.remove("show");
           document.getElementById('authModal').style.display = "none";
         }
         else{
           alert(res.data)
         }
+        
       })
         
 
@@ -101,6 +104,8 @@ export default {
       document.getElementById('psw').value = "";
       document.getElementById('login').value = "";
         document.getElementById('authModal').style.display = "block";
+        document.getElementById('authModal').classList.add("show");
+
     }
   }
 }

@@ -30,11 +30,12 @@ Express propose un système de routage qui permet de définir facilement des cor
 router.post('/', async (req, res, next) => {
 
            const data =  await User.find({nomUtilisateur:req.body.lgn, MDP: req.body.psw});
+
             if( data.length ){
                 res.send("SUCCESS")
             }
             else{
-                res.send("Le nom d'utilisateur ou le bien est invalide !")
+                res.send("Le nom d'utilisateur ou le mot de passe est invalide !")
             }
     
 })
